@@ -1,0 +1,111 @@
+*background: #282828
+! soft contrast: *background: #32302f
+*foreground: #ebdbb2
+! Black + DarkGrey
+*color0:  #282828
+*color8:  #928374
+! DarkRed + Red
+*color1:  #cc241d
+*color9:  #fb4934
+! DarkGreen + Green
+*color2:  #98971a
+*color10: #b8bb26
+! DarkYellow + Yellow
+*color3:  #d79921
+*color11: #fabd2f
+! DarkBlue + Blue
+*color4:  #458588
+*color12: #83a598
+! DarkMagenta + Magenta
+*color5:  #b16286
+*color13: #d3869b
+! DarkCyan + Cyan
+*color6:  #689d6a
+*color14: #8ec07c
+! LightGrey + White
+*color7:  #a89984
+*color15: #ebdbb2
+URxvt.color24:  #076678
+URxvt.color66:  #427b58
+URxvt.color88:  #9d0006
+URxvt.color96:  #8f3f71
+URxvt.color100: #79740e
+URxvt.color108: #8ec07c
+URxvt.color109: #83a598
+URxvt.color130: #af3a03
+URxvt.color136: #b57614
+URxvt.color142: #b8bb26
+URxvt.color167: #fb4934
+URxvt.color175: #d3869b
+URxvt.color208: #fe8019
+URxvt.color214: #fabd2f
+URxvt.color223: #ebdbb2
+URxvt.color228: #f2e5bc
+URxvt.color229: #fbf1c7
+URxvt.color230: #f9f5d7
+URxvt.color234: #1d2021
+URxvt.color235: #282828
+URxvt.color236: #32302f
+URxvt.color237: #3c3836
+URxvt.color239: #504945
+URxvt.color241: #665c54
+URxvt.color243: #7c6f64
+URxvt.color244: #928374
+URxvt.color245: #928374
+URxvt.color246: #a89984
+URxvt.color248: #bdae93
+URxvt.color250: #d5c4a1
+
+Xft.rgba:	        	    rgb
+URxvt*termName:		        rxvt-unicode
+
+URxvt.perl-lib: ~/.urxvt/ext/
+URxvt.perl-ext-common: default,matcher,resize-font,selection-to-clipboard,keyboard-select,pasta,url-select,fullscreen
+
+URxvt.urlLauncher: xdg-open
+URxvt.matcher.button: 1
+URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-\[\]]*[\\w/-]
+URxvt.keysym.M-u: perl:url-select:select_next
+
+! copypaste with only selecting
+URxvt.clipboard.autocopy: true
+/* URxvt.keysym.M-c: perl:clipboard:copy */
+/* URxvt.keysym.M-v: perl:clipboard:paste */
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+
+! paste with ctrl+v
+URxvt.keysym.Control-Alt-V:     perl:pasta:paste
+
+! !fullscreen switch
+URxvt.keysym.F11:       perl:fullscreen:switch
+
+!URxvt.reverseVideo: True
+
+/* URxvt.font: xft:Monospace:size=15, xft:Noto Emoji */
+/* URxvt.boldfont: xft:Monospace-Bold:size=15, xft:Noto Emoji */
+/* URxvt.font: xft:DejaVuSansMono Nerd Font Mono:style=Regular:size=15 */
+/* URxvt.boldfont: xft:DejaVuSansMono Nerd Font Mono:style=Bold:size=15 */
+/* found this by running: fc-list | grep -i nerd
+ * before that, I downloaded the nerd font and set it to .local/share/fonts
+ * because ~/.fonts is deprecated 
+ */
+URxvt.font: xft:DejaVuSansM Nerd Font Mono:style=Regular:size=12
+URxvt.boldfont: xft:DejaVuSansM Nerd Font Mono:style=Bold:size=12
+
+URxvt.letterSpace: 0
+
+! adjusting font size
+! And re-bind some keymappings (if you want, below are the defaults):
+! URxvt.keysym.C-minus:     resize-font:smaller
+! URxvt.keysym.C-plus:      resize-font:bigger
+! URxvt.keysym.C-equal:     resize-font:reset
+! URxvt.keysym.C-question:  resize-font:show
+!
+! You can also configure the number of steps to take when changing the size:
+! URxvt.resize-font.step: 2
+
+!Disables the insanely annoying Ctrl+Shift shortcut that enters ISO14755 mode
+URxvt.iso14755:         False
+
+! disable scrollbar
+URxvt.scrollBar: false

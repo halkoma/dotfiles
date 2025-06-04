@@ -1,0 +1,16 @@
+{
+  "diagnostic.virtualText": true,
+
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/tasks.json": [
+      "**/tasks/*.yml",
+      "**/tasks/*.yaml",
+      "**/handlers/*.yml",
+      "**/handlers/*.yaml"
+    ]
+  },
+
+  // CocInstall coc-sumneko-lua
+  // This line is to ignore error about "undefined global `vim`"
+  "sumneko-lua.enableNvimLuaDev": true,
+}
