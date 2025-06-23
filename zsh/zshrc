@@ -90,12 +90,15 @@ findedit () {
 
 source $ZSH/oh-my-zsh.sh
 
+if [[ $(systemd-detect-virt) != "none" ]]; then
+	  PROMPT="%{$fg_bold[red]%}[VIRSH-VM]%{$reset_color%} $PROMPT"
+fi
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 alias aliases="tac ~/.zshrc | awk -v RS= NR==1 | tac"
 alias ls="ls -A -F --group-directories-first --sort=extension --color=auto"
 alias virtualbox='virtualbox & > /dev/null 2>&1'
-alias vim=/usr/bin/nvim
 alias nvimc="vim ~/.config/nvim/{init.lua,lua/*}"
 alias nb="vim ~/.bashrc"
 alias nz="vim ~/.zshrc"
