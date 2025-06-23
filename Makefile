@@ -2,7 +2,7 @@ PWD = $(shell pwd)
 USER = $(shell whoami)
 
 SW_COMMON = vim htop strace tree make gcc gdb \
-	    fzf fd-find ripgrep wget curl bat zsh nodejs rxvt-unicode \
+	    fd-find ripgrep wget curl bat zsh nodejs rxvt-unicode
 SW_DEBIAN = ${SW_COMMON} xxd
 
 all: vim neovim git tmux share vimplugins debian omz-install zsh chsh urxvt
@@ -25,6 +25,7 @@ neovim:
 	mv ~/.local/bin/nvim/AppRun ~/.local/bin/nvim/nvim
 	chmod u+x ~/.local/bin/nvim/nvim
 	sudo ln -sf ~/.local/bin/nvim/nvim /usr/bin/nvim
+	rm nvim-linux-x86_64.appimage
 	cp -r neovim/.config/nvim ~/.config/
 
 omz-install:
@@ -52,7 +53,10 @@ share:
 	mkdir -p ~/.local/share/debian/
 	cp share/debian/* ~/.local/share/debian/
 
-debian:
+fzf:
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+
+debian: fzf
 	sudo apt-get update && sudo apt-get -y install ${SW_DEBIAN}
 	mkdir -p ~/.local/bin
 	ln -sf /usr/bin/batcat ~/.local/bin/bat

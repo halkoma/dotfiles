@@ -4,7 +4,7 @@
 
 -- vim.cmd[[colorscheme tokyonight]]
 -- vim.cmd[[colorscheme sonokai]]
-vim.cmd[[colorscheme gruvbox]]
+-- vim.cmd[[colorscheme gruvbox]]
 
 -- vim.o.background = "dark" -- or "light" for light mode
 vim.g['yaml.schemaStore.enable'] = false

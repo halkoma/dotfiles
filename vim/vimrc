@@ -71,7 +71,7 @@ Plug '~/.fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 " status bar
-Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 " work with surrounding brackets, eg. change them
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'

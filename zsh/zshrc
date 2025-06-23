@@ -100,6 +100,7 @@ alias aliases="tac ~/.zshrc | awk -v RS= NR==1 | tac"
 alias ls="ls -A -F --group-directories-first --sort=extension --color=auto"
 alias virtualbox='virtualbox & > /dev/null 2>&1'
 alias nvimc="vim ~/.config/nvim/{init.lua,lua/*}"
+alias vim="nvim"
 alias nb="vim ~/.bashrc"
 alias nz="vim ~/.zshrc"
 alias sb="source ~/.bazshrc"
