@@ -76,16 +76,29 @@ replace () {
     fi
 }
 
-findedit () {
+fe () {
     if [ "$#" -ne 1 ]; then
-        echo "Must be 1 parameter"
+        echo "Must be 1 parameter: e.g.: fe 'File contains This Text'"
         return 1
     fi
 
     searchterm="$1"
-    rg -l "$searchterm" | \
-      fzf --preview "batcat --style=header,grid --color=always --line-range :300 {}" --height 70% --bind ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down --preview-window=bottom,80% | \
-      xargs -o nvim
+
+    selection=$(
+        rg --vimgrep "$searchterm" | \
+        fzf \
+            --delimiter ':' \
+            --preview "bat --style=header,grid --color=always --line-range :300 -H {2} {1}" \
+            --height 98% \
+            --bind="ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down,ctrl-e:change-preview-window(bottom,99%|bottom,80%)" \
+            --preview-window=bottom,80%,wrap
+    )
+
+    if [ -n "$selection" ]; then
+        file=$(echo "$selection" | cut -d : -f 1 )
+        line=$(echo "$selection" | cut -d : -f 2 )
+        nvim -c "$line" -c "norm zz" "$file"
+    fi
 }
 
 source $ZSH/oh-my-zsh.sh

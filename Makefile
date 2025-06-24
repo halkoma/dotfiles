@@ -5,9 +5,18 @@ SW_COMMON = vim htop strace tree make gcc gdb \
 	    fd-find ripgrep wget curl bat zsh nodejs rxvt-unicode
 SW_DEBIAN = ${SW_COMMON} xxd
 
-all: vim neovim git tmux share vimplugins debian omz-install zsh chsh urxvt
+all: git debian vim vimplugins omz-install zsh chsh neovim tmux urxvt
 
-.PHONY: vim neovim git tmux share vimplugins debian omz-install zsh chsh urxvt
+.PHONY: git debian vim vimplugins omz-install zsh chsh neovim tmux urxvt
+
+git:
+	cp git/gitconfig ~/.gitconfig
+
+debian:
+	sudo apt-get update && sudo apt-get -y install ${SW_DEBIAN}
+	mkdir -p ~/.local/bin
+	ln -sf /usr/bin/batcat ~/.local/bin/bat
+	ln -sf /usr/bin/fdfind ~/.local/bin/fd
 
 vim:
 	cp vim/vimrc ~/.vimrc
@@ -16,17 +25,6 @@ vimplugins:
 	curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 		    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	vim -c 'PlugInstall' -c 'qa'
-
-neovim:
-	curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage
-	chmod 770 nvim-linux-x86_64.appimage
-	./nvim-linux-x86_64.appimage --appimage-extract
-	mv squashfs-root/ ~/.local/bin/nvim
-	mv ~/.local/bin/nvim/AppRun ~/.local/bin/nvim/nvim
-	chmod u+x ~/.local/bin/nvim/nvim
-	sudo ln -sf ~/.local/bin/nvim/nvim /usr/bin/nvim
-	rm nvim-linux-x86_64.appimage
-	cp -r neovim/.config/nvim ~/.config/
 
 omz-install:
 	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -40,24 +38,26 @@ zsh: omz-install
 chsh:
 	sudo chsh -s /usr/bin/zsh ${USER}
 
-git:
-	cp git/gitconfig ~/.gitconfig
+fzf:
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+neovim:
+	curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage
+	chmod 770 nvim-linux-x86_64.appimage
+	./nvim-linux-x86_64.appimage --appimage-extract
+	mv squashfs-root/ ~/.local/bin/nvim
+	mv ~/.local/bin/nvim/AppRun ~/.local/bin/nvim/nvim
+	chmod u+x ~/.local/bin/nvim/nvim
+	sudo ln -sf ~/.local/bin/nvim/nvim /usr/bin/nvim
+	rm nvim-linux-x86_64.appimage
+	mkdir -p ~/.config/nvim/
+	cp -r neovim/.config/nvim/ ~/.config/
+	# install plugins, must run twice:
+	# 1) install packer itself
+	# 2) install plugins
+	for i in 1 2; do nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'; done
 
 tmux:
 	cp tmux/tmux.conf ~/.tmux.conf
 
 urxvt:
 	cp urxvt/Xresources ~/.Xresources
-
-share:
-	mkdir -p ~/.local/share/debian/
-	cp share/debian/* ~/.local/share/debian/
-
-fzf:
-	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
-
-debian: fzf
-	sudo apt-get update && sudo apt-get -y install ${SW_DEBIAN}
-	mkdir -p ~/.local/bin
-	ln -sf /usr/bin/batcat ~/.local/bin/bat
-	ln -sf /usr/bin/fdfind ~/.local/bin/fd
