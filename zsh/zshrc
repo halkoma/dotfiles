@@ -1,3 +1,5 @@
+export PATH="$HOME/.local/bin:$PATH"
+
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -49,57 +51,6 @@ setopt EXTENDED_HISTORY
 # Key bindings
 # This is for ctrl+u work similar to bash and NOT kill the whole line
 bindkey \^U backward-kill-line
-
-# run s/search/replace/gc on stuff found with grep
-# here, the c in gc means that it asks for confirmation
-# usage:
-# replace replace_this with_this
-replace () {
-    if [ "$#" -ne 2 ]; then
-        echo "Must be 2 parameters: e.g. 'replace replace_this with_this'"
-        return 1
-    fi
-
-    limit=50  # if more than 50 grep results found, do nothing
-    search="$1"
-    replace="$2"
-    results=$(grep -rl --color=never "$search")
-    length=$(echo "$results" | wc -l)
-
-    if [ "$length" -ne 0 ] && [ "$length" -lt "$limit" ]; then
-        echo "$results" | while IFS= read -r file
-        do
-            nvim -c "%s/$search/$replace/gc" -c 'wq' "$file"
-        done
-    else
-        echo "$length results found, nothing done"
-    fi
-}
-
-fe () {
-    if [ "$#" -ne 1 ]; then
-        echo "Must be 1 parameter: e.g.: fe 'File contains This Text'"
-        return 1
-    fi
-
-    searchterm="$1"
-
-    selection=$(
-        rg --vimgrep "$searchterm" | \
-        fzf \
-            --delimiter ':' \
-            --preview "bat --style=header,grid --color=always --line-range :300 -H {2} {1}" \
-            --height 98% \
-            --bind="ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down,ctrl-e:change-preview-window(bottom,99%|bottom,80%)" \
-            --preview-window=bottom,80%,wrap
-    )
-
-    if [ -n "$selection" ]; then
-        file=$(echo "$selection" | cut -d : -f 1 )
-        line=$(echo "$selection" | cut -d : -f 2 )
-        nvim -c "$line" -c "norm zz" "$file"
-    fi
-}
 
 source $ZSH/oh-my-zsh.sh
 

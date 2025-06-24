@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+CPUS="${CPUS:=6}"
+DISK="${DISK:=20}"
+RAM="${RAM:=8192}"
+
+domain="$1"
+
+virt-install \
+    --name "$domain" \
+    --ram "$RAM" --vcpus "$CPUS" \
+    --disk size="$DISK" \
+    --os-variant debian12 \
+    --graphics none \
+    --initrd-inject="$HOME/.local/share/debian/preseed.cfg" \
+    --console pty,target_type=serial \
+    --location 'https://ftp.debian.org/debian/dists/bookworm/main/installer-amd64/' \

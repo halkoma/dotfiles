@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+if [ "$#" -ne 1 ]; then
+    echo "Must be 1 parameter: e.g.: fe 'File contains This Text'"
+    exit 1
+fi
+
+searchterm="$1"
+
+selection=$(
+    rg --vimgrep "$searchterm" | \
+    fzf \
+        --delimiter ':' \
+        --preview "bat --style=header,grid --color=always --line-range :300 -H {2} {1}" \
+        --height 98% \
+        --bind="ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down,ctrl-e:change-preview-window(bottom,99%|bottom,80%)" \
+        --preview-window=bottom,80%,wrap
+)
+
+if [ -n "$selection" ]; then
+    file=$(echo "$selection" | cut -d : -f 1 )
+    line=$(echo "$selection" | cut -d : -f 2 )
+    nvim -c "$line" -c "norm zz" "$file"
+fi

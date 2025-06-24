@@ -5,7 +5,7 @@ SW_COMMON = vim htop strace tree make gcc gdb \
 	    fd-find ripgrep wget curl bat zsh nodejs rxvt-unicode
 SW_DEBIAN = ${SW_COMMON} xxd
 
-all: git debian vim vimplugins omz-install zsh chsh fzf neovim tmux urxvt share
+all: git debian vim vimplugins omz-install zsh chsh fzf neovim tmux urxvt share bin
 
 .PHONY: git
 git:
@@ -76,3 +76,10 @@ urxvt:
 share:
 	mkdir -p ~/.local/share/debian/	
 	cp share/debian/* ~/.local/share/debian/
+
+.PHONY: bin
+bin: share
+	mkdir -p ~/.local/bin/
+	cp bin/* ~/.local/bin/
+	# set x for script files but not symlinks (e.g. bat and fd)
+	find ~/.local/bin/ -type f ! -type l -exec chmod 744 {} +

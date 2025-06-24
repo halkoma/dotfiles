@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# run s/search/replace/gc on stuff found with grep
+# here, the c in gc means that it asks for confirmation
+# usage:
+# replace replace_this with_this
+if [ "$#" -ne 2 ]; then
+    echo "Must be 2 parameters: e.g. 'replace replace_this with_this'"
+    return 1
+fi
+
+limit=50  # if more than 50 grep results found, do nothing
+search="$1"
+replace="$2"
+results=$(grep -rl --color=never "$search")
+length=$(echo "$results" | wc -l)
+
+if [ "$length" -ne 0 ] && [ "$length" -lt "$limit" ]; then
+    echo "$results" | while IFS= read -r file
+    do
+        nvim -c "%s/$search/$replace/gc" -c 'wq' "$file"
+    done
+else
+    echo "$length results found, nothing done"
+fi
