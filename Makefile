@@ -5,7 +5,7 @@ SW_COMMON = vim htop strace tree make gcc gdb \
 	    fd-find ripgrep wget curl bat zsh nodejs rxvt-unicode
 SW_DEBIAN = ${SW_COMMON} xxd
 
-all: git debian vim vimplugins omz-install zsh chsh fzf neovim tmux urxvt
+all: git debian vim vimplugins omz-install zsh chsh fzf neovim tmux urxvt share
 
 .PHONY: git
 git:
@@ -71,3 +71,8 @@ tmux:
 .PHONY: urxvt
 urxvt:
 	cp urxvt/Xresources ~/.Xresources
+
+.PHONY: share
+share:
+	mkdir -p ~/.local/share/debian/	
+	cp share/debian/* ~/.local/share/debian/
