@@ -5,41 +5,49 @@ SW_COMMON = vim htop strace tree make gcc gdb \
 	    fd-find ripgrep wget curl bat zsh nodejs rxvt-unicode
 SW_DEBIAN = ${SW_COMMON} xxd
 
-all: git debian vim vimplugins omz-install zsh chsh neovim tmux urxvt
+all: git debian vim vimplugins omz-install zsh chsh fzf neovim tmux urxvt
 
-.PHONY: git debian vim vimplugins omz-install zsh chsh neovim tmux urxvt
-
+.PHONY: git
 git:
 	cp git/gitconfig ~/.gitconfig
 
+.PHONY: debian
 debian:
 	sudo apt-get update && sudo apt-get -y install ${SW_DEBIAN}
 	mkdir -p ~/.local/bin
 	ln -sf /usr/bin/batcat ~/.local/bin/bat
 	ln -sf /usr/bin/fdfind ~/.local/bin/fd
 
+.PHONY: vim
 vim:
 	cp vim/vimrc ~/.vimrc
 
+.PHONY: vimplugins
 vimplugins:
 	curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 		    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	vim -c 'PlugInstall' -c 'qa'
 
+.PHONY: omz-install
 omz-install:
 	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
+.PHONY: zsh
 zsh: omz-install
 	git clone https://github.com/zsh-users/zsh-autosuggestions $${ZSH_CUSTOM:-$${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 	git clone https://github.com/wting/autojump $${ZSH_CUSTOM:-$${HOME}/.oh-my-zsh/custom}/plugins/autojump && (cd $${ZSH_CUSTOM:-$${HOME}/.oh-my-zsh/custom}/plugins/autojump && ./install.py)
 	cp zsh/zshrc ~/.zshrc
 	zsh -c "source ~/.zshrc"
 
+.PHONY: chsh
 chsh:
 	sudo chsh -s /usr/bin/zsh ${USER}
 
+.PHONY: fzf
 fzf:
-	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && yes | ~/.fzf/install
+
+.PHONY: neovim
 neovim:
 	curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage
 	chmod 770 nvim-linux-x86_64.appimage
@@ -56,8 +64,10 @@ neovim:
 	# 2) install plugins
 	for i in 1 2; do nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'; done
 
+.PHONY: tmux
 tmux:
 	cp tmux/tmux.conf ~/.tmux.conf
 
+.PHONY: urxvt
 urxvt:
 	cp urxvt/Xresources ~/.Xresources
