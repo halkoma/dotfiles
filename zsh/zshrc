@@ -12,13 +12,12 @@ ZSH_THEME="robbyrussell"
 
 function plugins () {
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-  git clone https://github.com/wting/autojump ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/autojump && (cd ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/autojump && ./install.py)
 }
 
 plugins=(
   zsh-autosuggestions
-  autojump
 )
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#d75f00,bg=gray,bold,underline"
 
 # fzf
 FZF_DEFAULT_COMMAND="fdfind . --hidden --follow --exclude .git"  # $HOME"
@@ -29,10 +28,6 @@ export FZF_CTRL_R_OPTS="
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --color header:italic
   --header 'Press CTRL-Y to copy command into clipboard'"
-
-# autojump
-[[ -s $HOME/etc/profile.d/autojump.sh ]] && source $HOME/etc/profile.d/autojump.sh
-autoload -U compinit && compinit -u
 
 # User configuration
 
@@ -57,6 +52,8 @@ source $ZSH/oh-my-zsh.sh
 if [[ $(systemd-detect-virt) != "none" ]]; then
 	  PROMPT="%{$fg_bold[red]%}[VIRSH-VM]%{$reset_color%} $PROMPT"
 fi
+
+eval "$(zoxide init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

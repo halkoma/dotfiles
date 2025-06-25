@@ -5,7 +5,7 @@ SW_COMMON = vim htop strace tree make gcc gdb \
 	    fd-find ripgrep wget curl bat zsh nodejs rxvt-unicode
 SW_DEBIAN = ${SW_COMMON} xxd
 
-all: git debian vim vimplugins omz-install zsh chsh fzf neovim tmux urxvt share bin
+all: git debian vim vimplugins omz-install zsh chsh fzf neovim tmux urxvt share bin zoxide
 
 .PHONY: git
 git:
@@ -83,3 +83,7 @@ bin: share
 	cp bin/* ~/.local/bin/
 	# set x for script files but not symlinks (e.g. bat and fd)
 	find ~/.local/bin/ -type f ! -type l -exec chmod 744 {} +
+
+.PHONY: zoxide
+zoxide:
+	curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
