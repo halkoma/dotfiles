@@ -23,7 +23,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#d75f00,bg=gray,bold,underline"
 FZF_DEFAULT_COMMAND="fdfind . --hidden --follow --exclude .git"  # $HOME"
 FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 FZF_ALT_C_COMMAND='fdfind . --type d --hidden --follow --exclude .git'
-FZF_DEFAULT_OPTS='--preview "batcat --style=header,grid --color=always --line-range :300 {}" --height 70% --bind ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down --preview-window=bottom,80%'
+FZF_DEFAULT_OPTS='--preview "bat --style=header,grid --color=always --line-range :300 {}" --height 98% --bind="ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down,ctrl-e:change-preview-window(bottom,99%|bottom,80%)" --preview-window=bottom,80%,wrap'
 export FZF_CTRL_R_OPTS="
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --color header:italic
@@ -85,3 +85,4 @@ alias gd="git diff"
 alias gd1="git diff HEAD^"
 alias gd2="git diff HEAD^^"
 alias gw="git diff --word-diff=porcelain"
+alias gcb="git branch | fzf | xargs git switch"
