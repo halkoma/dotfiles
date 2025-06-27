@@ -34,7 +34,6 @@ omz-install:
 
 .PHONY: zsh
 zsh: omz-install
-	git clone https://github.com/zsh-users/zsh-autosuggestions $${ZSH_CUSTOM:-$${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 	cp zsh/zshrc ~/.zshrc
 	zsh -c "source ~/.zshrc"
 
@@ -65,7 +64,11 @@ neovim:
 
 .PHONY: tmux
 tmux:
+	@if [ ! -d ~/.tmux/plugins/tpm ]; then \
+		git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm; \
+	fi
 	cp tmux/tmux.conf ~/.tmux.conf
+	echo "Install tmux plugins: enter tmux and '<prefix> + I'"
 
 .PHONY: urxvt
 urxvt:
