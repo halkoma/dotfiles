@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Select word from terminal output in tmux pane and send it to clipboard
+# tcopy = "tmux copy"
+# fzf -m allows using tab to select multiple entries with fzf
+
+selection=$(tmux capture-pane -p | tr -s '[:space:]' '\n' | fzf -m)
+[ -n "$selection" ] && printf "$selection" | xsel --clipboard --input
