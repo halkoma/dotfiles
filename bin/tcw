@@ -3,5 +3,5 @@
 # tcopy = "tmux copy"
 # fzf -m allows using tab to select multiple entries with fzf
 
-selection=$(tmux capture-pane -p | tr -s '[:space:]' '\n' | fzf -m)
+selection=$(tmux capture-pane -p | tr -s '[:space:]' '\n' | fzf -m --bind "ctrl-space:jump")
 [ -n "$selection" ] && printf "$selection" | xsel --clipboard --input

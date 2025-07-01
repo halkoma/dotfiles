@@ -1,8 +1,8 @@
 PWD = $(shell pwd)
 USER = $(shell whoami)
 
-SW_COMMON = vim htop strace tree make gcc gdb \
-	    fd-find ripgrep wget curl bat zsh nodejs rxvt-unicode
+SW_COMMON = vim htop strace tree make gcc gdb fd-find ripgrep wget curl bat \
+			rsync zsh nodejs rxvt-unicode
 SW_DEBIAN = ${SW_COMMON} xxd
 
 all: git debian vim vimplugins omz-install zsh chsh fzf neovim tmux urxvt share bin zoxide

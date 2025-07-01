@@ -3,4 +3,4 @@
 # te = "tmux edit"
 # fzf -m allows using tab to select multiple entries with fzf
 
-selection=$(tmux capture-pane -p | tr -s '[:space:]' '\n' | fzf -m) && [ -n "$selection" ] && nvim $selection
+selection=$(tmux capture-pane -p | tr -s '[:space:]' '\n' | fzf -m --bind "ctrl-space:jump") && [ -n "$selection" ] && nvim $selection
