@@ -10,7 +10,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 # ZSH_THEME="gnzh"
 
-plugins=( 
+plugins=(
     # other plugins...
     zsh-autosuggestions
 )
@@ -41,7 +41,7 @@ bindkey \^U backward-kill-line
 
 source $ZSH/oh-my-zsh.sh
 
-if [[ $(systemd-detect-virt) != "none" ]]; then
+if [[ "$OSTYPE" != darwin* && $(systemd-detect-virt) != "none" ]]; then
 	  PROMPT="%{$fg_bold[red]%}[VIRSH-VM]%{$reset_color%} $PROMPT"
 fi
 
@@ -66,10 +66,8 @@ alias nb="vim ~/.bashrc"
 alias nz="vim ~/.zshrc"
 alias sb="source ~/.bazshrc"
 alias sz="source ~/.zshrc"
-alias bat="batcat"
 alias bark="paplay /usr/share/sounds/gnome/default/alerts/bark.ogg"
 alias barkloop="for i in {1..3}; do bark; done"
-alias fd="fdfind"
 alias btconnect-j75t="bluetoothctl connect 50:C2:ED:5F:19:41"
 alias btdisconnect-j75t="bluetoothctl disconnect 50:C2:ED:5F:19:41"
 alias btreconnect="btdisconnect-j75t && btconnect-j75t"

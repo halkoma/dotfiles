@@ -4,6 +4,7 @@ USER = $(shell whoami)
 SW_COMMON = vim htop strace tree make gcc gdb fd-find ripgrep wget curl bat \
 			rsync zsh nodejs rxvt-unicode
 SW_DEBIAN = ${SW_COMMON} xxd
+SW_MAC = neovim node fd ripgrep bat
 
 all: git debian vim vimplugins omz-install zsh chsh fzf neovim tmux urxvt share bin zoxide
 
@@ -78,7 +79,7 @@ urxvt:
 
 .PHONY: share
 share:
-	mkdir -p ~/.local/share/debian/	
+	mkdir -p ~/.local/share/debian/
 	cp share/debian/* ~/.local/share/debian/
 
 .PHONY: bin
@@ -91,3 +92,7 @@ bin: share
 .PHONY: zoxide
 zoxide:
 	curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+.PHONY: homebrew
+homebrew:
+	brew install ${SW_MAC}
