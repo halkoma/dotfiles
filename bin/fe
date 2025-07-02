@@ -5,20 +5,28 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
+# Load fzf env vars
+[ -f ~/.fzf.env ] && source ~/.fzf.env
+
 searchterm="$1"
 
+# Select multiple matches
 selection=$(
     rg --vimgrep "$searchterm" | \
-    fzf \
-        --delimiter ':' \
-        --preview "bat --style=header,grid --color=always --line-range :300 -H {2} {1}" \
-        --height 98% \
-        --bind="ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down,ctrl-e:change-preview-window(bottom,99%|bottom,80%)" \
-        --preview-window=bottom,80%,wrap
+    fzf -m
 )
 
 if [ -n "$selection" ]; then
-    file=$(echo "$selection" | cut -d : -f 1 )
-    line=$(echo "$selection" | cut -d : -f 2 )
-    nvim -c "$line" -c "norm zz" "$file"
+    args=()
+    while IFS= read -r line; do
+        file=$(echo "$line" | cut -d: -f1)
+        lnum=$(echo "$line" | cut -d: -f2)
+        # Add "+{line}" and file to args
+        args+=("+${lnum}" "$file")
+    done <<< "$selection"
+
+    echo "${args[@]}"
+
+    # Open all files at the right line in nvim tabs
+    nvim -p "${args[@]}"
 fi

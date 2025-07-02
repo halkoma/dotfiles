@@ -31,6 +31,7 @@ vimplugins:
 .PHONY: omz-install
 omz-install:
 	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+	sh -c 'git clone https://github.com/zsh-users/zsh-autosuggestions "$${ZSH_CUSTOM:-$$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"'
 
 .PHONY: zsh
 zsh: omz-install
@@ -44,6 +45,7 @@ chsh:
 .PHONY: fzf
 fzf:
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && yes | ~/.fzf/install
+	cp fzf/fzf.env ~/.fzf.env
 
 .PHONY: neovim
 neovim:
