@@ -115,6 +115,9 @@ map('n', '<leader>q', 'vipJgqq')
 -- wrap selection (same but visual mode)
 map('v', '<leader>q', 'gqq')
 
+-- ``` is needed for code block in markdown
+map('n', '<leader>å', 'i```<esc>')
+
 -- nvim-trevJ.lua
 -- make e.g. this(a,b,c)
 -- transform into
