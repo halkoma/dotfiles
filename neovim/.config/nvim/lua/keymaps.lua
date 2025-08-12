@@ -116,7 +116,7 @@ map('n', '<leader>q', 'vipJgqq')
 map('v', '<leader>q', 'gqq')
 
 -- ``` is needed for code block in markdown
-map('n', '<leader>å', 'i```<esc>')
+map('n', '<leader>`', 'o```<CR>```<Esc>O')
 
 -- nvim-trevJ.lua
 -- make e.g. this(a,b,c)
