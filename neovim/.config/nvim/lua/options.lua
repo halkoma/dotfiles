@@ -39,6 +39,7 @@ opt.linebreak = true        -- Wrap on word boundary
 opt.termguicolors = false    -- Disable 24-bit RGB colors - use with urxvt 
 -- opt.termguicolors = true    -- Enable 24-bit RGB colors
 opt.laststatus=2            -- Set global statusline
+opt.list=true               -- helps viewing whitespace at EOL
 
 -----------------------------------------------------------
 -- Tabs, indent
