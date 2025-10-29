@@ -13,18 +13,6 @@ require('keymaps')
 
 require('bufferline').setup{}  -- show tabs on top
 
-require('lualine').setup {  -- status bar
-  sections = {
-    lualine_a = {
-      {
-        'filename',
-        file_status = true, -- displays file status (readonly status, modified status)
-        path = 3 -- 0 = just filename, 1 = relative path, 2 = absolute path, 3 = absolute path with $HOME=~
-      }
-    }
-  }
-}
-
 require("nvim-tree").setup()
 
 require('telescope').setup {
@@ -88,3 +76,4 @@ require('nvim-treesitter.configs').setup {
 -- indent-blankline.nvim
 -- vertical lines to indicate indentation
 require("ibl").setup()
+

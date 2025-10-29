@@ -75,12 +75,6 @@ return packer.startup(function(use)
   -- merge tmux and vim status line to not have 2 status lines
   use 'vimpostor/vim-tpipeline'
 
-  -- a statusline
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-  }
-
   -- this shows tabs on the top of vim
   use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
 
@@ -94,6 +88,7 @@ return packer.startup(function(use)
   use 'tpope/vim-markdown'
   use 'tpope/vim-characterize'
   use 'tpope/vim-endwise'
+  use 'tpope/vim-obsession'
 
   -- show a git diff sign in the sign column (where line numbers are)
   use 'airblade/vim-gitgutter'  -- Git
@@ -174,3 +169,4 @@ return packer.startup(function(use)
     require('packer').sync()
   end
 end)
+
