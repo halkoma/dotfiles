@@ -60,6 +60,14 @@ xsel() {
     fi
 }
 
+# Insert rg '' and place cursor inside quotes
+_rg_abbrev() {
+  LBUFFER+="rg ''"
+  CURSOR=$(( CURSOR - 1 ))   # move left once
+}
+zle -N _rg_abbrev               # register widget with ZLE
+bindkey '^g' _rg_abbrev         # bind to Ctrl‑g
+
 alias aliases="tac ~/.zshrc | awk -v RS= NR==1 | tac"
 alias ls="ls -A -F --group-directories-first --sort=extension --color=auto"
 alias virtualbox='virtualbox & > /dev/null 2>&1'
