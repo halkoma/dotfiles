@@ -6,7 +6,7 @@ SW_COMMON = vim htop strace tree make gcc gdb fd-find ripgrep wget curl bat \
 SW_DEBIAN = ${SW_COMMON} xxd
 SW_MAC = neovim node fd ripgrep bat
 
-all: git debian vim vimplugins omz-install zsh chsh fzf neovim tmux urxvt share bin zoxide
+all: git debian vim vimplugins zsh-plugins zsh chsh fzf neovim tmux urxvt share bin zoxide
 
 .PHONY: git
 git:
@@ -29,13 +29,12 @@ vimplugins:
 		    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	vim -c 'PlugInstall' -c 'qa'
 
-.PHONY: omz-install
-omz-install:
-	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-	sh -c 'git clone https://github.com/zsh-users/zsh-autosuggestions "$${ZSH_CUSTOM:-$$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"'
+.PHONY: zsh-plugins
+zsh-plugins:
+	sh -c 'git clone https://github.com/zsh-users/zsh-autosuggestions "${HOME}/.zsh/zsh-autosuggestions/plugins/zsh-autosuggestions"'
 
 .PHONY: zsh
-zsh: omz-install
+zsh: zsh-plugins
 	cp zsh/zshrc ~/.zshrc
 	zsh -c "source ~/.zshrc"
 
